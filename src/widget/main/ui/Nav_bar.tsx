@@ -1,16 +1,19 @@
 'use client'
 
+import { BoardNames } from "@/entity/board/type/BoardTypes";
 import css from "@/entity/main/css/nav_bar.module.css";
+import { getBoardNames } from "@/feature/board/api/boardGetApi";
 import { Breadcrumbs, Link as MuiLink } from "@mui/material";
 import NextLink from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Nav_bar() {
-  const [navs, setNavs] = useState<string[]>([]);
+  const [navs, setNavs] = useState<BoardNames>([]);
 
   useEffect(() => {
-    // TODO 게시판들(도메인) 목록 불러오기
-    setNavs(['asdf', 'qwer', 'zxcv']);
+    (async () => {
+      setNavs(await getBoardNames());
+    })();
   }, []);
 
   return (

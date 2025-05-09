@@ -1,6 +1,6 @@
+import List_main from "@/widget/main/ui/List_main";
 import Nav_bar from "@/widget/main/ui/Nav_bar";
 import css from "./page.module.css";
-import List_main from "@/widget/main/ui/List_main";
 
 export default function Home() {
   return (<>

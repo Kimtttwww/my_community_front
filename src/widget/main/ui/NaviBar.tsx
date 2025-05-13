@@ -1,21 +1,13 @@
-'use client'
-
 import { BoardNames } from "@/entity/board/type/BoardTypes";
 import css from "@/entity/main/css/nav_bar.module.css";
-import { getBoardNames } from "@/feature/board/api/boardGetApi";
 import { Breadcrumbs, Link as MuiLink } from "@mui/material";
 import NextLink from "next/link";
-import { useEffect, useState } from "react";
 
-export default function Nav_bar() {
-  const [navs, setNavs] = useState<BoardNames>([]);
+type ownProps = {
+  navs: BoardNames
+}
 
-  useEffect(() => {
-    (async () => {
-      setNavs(await getBoardNames());
-    })();
-  }, []);
-
+export default function NaviBar({navs}: ownProps) {
   return (
     <section className="flex" style={{ minHeight: '200px', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center' }}>
       <h1>My Community</h1>

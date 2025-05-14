@@ -1,3 +1,9 @@
+.list_item{
+  margin: 5px 0;
+  cursor: pointer;
+  border-bottom: 1px solid lightgray;
+}
+
 .list_item>p {
   width: 17.5%;
   justify-content: center;
@@ -5,5 +11,4 @@
   font-size: medium;
   white-space: nowrap;
   text-overflow: ellipsis;
-  margin: 3px 0;
 }

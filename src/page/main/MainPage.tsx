@@ -17,7 +17,7 @@ export default function MainPage() {
 
       Promise.allSettled(boardNames?.map((name: string) => getBoardList(name)))
         .then((result) => {
-          setBoardList(result.filter((req) => req.status == 'fulfilled').map((result) => result?.value?.boards));
+          setBoardList(result.filter((req) => req.status == 'fulfilled').map((result) => result.value.boards));
         });
     })();
   }, []);
@@ -26,7 +26,7 @@ export default function MainPage() {
     <NaviBar navs={boardNames} />
 
     <div className="flex" style={{ flexWrap: "wrap", justifyContent: 'space-around' }}>
-      {boardLists.map((boardList, i) => (<MainList key={boardNames[i]} listName={boardNames?.[i]?.toUpperCase()} listContent={boardList} />
+      {boardLists.map((boardList, i) => (<MainList key={boardNames[i]} listName={boardNames?.[i]} listContent={boardList} />
       ))}
     </div>
   </>);

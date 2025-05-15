@@ -6,6 +6,6 @@ export type Board = {
   board_no: number,
   writer: string,
   status: boolean,
-  category_no: number | null,
+  category_no: number | undefined,
   views: number
 };

@@ -16,7 +16,7 @@ export default function MainList({ listName, listContent }: ownProps) {
           <article key={board.board_no} className={`flex ${css.list_item}`}>
             <p style={{ width: '65%' }}>{board.title}</p>
             <p className={`flex`}>{board.writer}</p>
-            <p className={`flex`}>{board.created}</p>
+            <p className={`flex`}>{board.created.replaceAll('-', '. ')}</p>
           </article>
         ))}
       </section>

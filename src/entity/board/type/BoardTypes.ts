@@ -1,11 +1,14 @@
-export type BoardNames = string[];
+export type BoardName = {
+  board: string
+  subtitle: string
+};
 export type Board = {
   title: string,
   content: string,
   created: string,
-  board_no: number,
+  boardNo: number,
   writer: string,
   status: boolean,
-  category_no: number | undefined,
+  categoryNo: number | undefined,
   views: number
 };

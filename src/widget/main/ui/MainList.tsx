@@ -8,12 +8,12 @@ type ownProps = {
 }
 
 export default function MainList({ listName, listContent }: ownProps) {
-  return (  // TODO 변수 적용 필요
+  return (
     <section className="flex" style={{ width: '560px', minHeight: '100px', flexDirection: 'column', margin: '20px 5px', padding: '5px' }}>
       <Link href={''} style={{ fontSize: 'x-large', fontWeight: "bold", textTransform: 'uppercase', marginBottom: '15px' }}>{listName}</Link>
       <section className="flex" style={{ flexDirection: 'column' }}>
         {listContent?.map((board) => (
-          <article key={board.board_no} className={`flex ${css.list_item}`}>
+          <article key={board.boardNo} className={`flex ${css.list_item}`}>
             <p style={{ width: '65%' }}>{board.title}</p>
             <p className={`flex`}>{board.writer}</p>
             <p className={`flex`}>{board.created.replaceAll('-', '. ')}</p>

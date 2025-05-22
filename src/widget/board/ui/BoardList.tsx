@@ -8,6 +8,7 @@ type ownProps = {
 }
 
 export default function BoardList({ boards }: ownProps) {
+  // TODO 익명 글 작성자 처리 필요
   return (
     <Table style={{ borderTop: '2px solid black' }}>
       <TableHead>

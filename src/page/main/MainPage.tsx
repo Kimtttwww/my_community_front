@@ -4,18 +4,16 @@ import NaviBar from "@/widget/main/ui/NaviBar";
 
 export default async function MainPage() {
   const boardNames = (await getBoardNames()).filter(({ board }) => board != 'qna' && board != 'faq');
-  const boardTitle = boardNames.map(({ board, subtitle }) => subtitle || board)
 
   const boardLists = (await Promise.allSettled(boardNames.map(({ board }) => getBoardList(board))))
     .filter((req) => req.status == 'fulfilled')
     .map((result) => result.value.boards)
 
   return (<>
-    <NaviBar navs={boardTitle} />
+    <NaviBar names={boardNames} />
 
     <div className="flex" style={{ flexWrap: "wrap", justifyContent: 'space-around' }}>
-      {boardLists.map((boardList, i) => (<MainList key={boardTitle[i]} listName={boardTitle[i]} listContent={boardList} />
-      ))}
+      {boardLists.map((boardList, i) => (<MainList key={boardNames[i].board} listName={boardNames[i]} listContent={boardList} />))}
     </div>
   </>);
 }

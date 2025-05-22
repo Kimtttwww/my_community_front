@@ -1,16 +1,17 @@
-import { Board } from "@/entity/board/type/BoardTypes";
+import { Board, BoardName } from "@/entity/board/type/BoardTypes";
 import css from "@/entity/main/css/list.module.css";
 import Link from "next/link";
 
 type ownProps = {
-  listName?: string;
+  listName: BoardName;
   listContent: Board[];
 }
 
 export default function MainList({ listName, listContent }: ownProps) {
+  // TODO 익명 글 작성자 처리 필요
   return (
-    <section className="flex" style={{ width: '560px', minHeight: '100px', flexDirection: 'column', margin: '20px 5px', padding: '5px' }}>
-      <Link href={''} style={{ fontSize: 'x-large', fontWeight: "bold", textTransform: 'uppercase', marginBottom: '15px' }}>{listName}</Link>
+    <section className="flex" style={{ width: '560px', minHeight: '100px', flexDirection: 'column', margin: '15px 5px', padding: '5px' }}>
+      <Link href={`/${listName.board}`} style={{ fontSize: 'x-large', fontWeight: "bold", textTransform: 'uppercase', marginBottom: '15px' }}>{listName.subtitle || listName.board}</Link>
       <section className="flex" style={{ flexDirection: 'column' }}>
         {listContent?.map((board) => (
           <article key={board.boardNo} className={`flex ${css.list_item}`}>

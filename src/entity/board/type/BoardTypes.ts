@@ -1,7 +1,8 @@
 export type BoardName = {
   board: string
-  subtitle: string
+  subtitle?: string
 };
+
 export type Board = {
   title: string,
   content: string,
@@ -12,3 +13,9 @@ export type Board = {
   categoryNo: number | undefined,
   views: number
 };
+
+export type Category = {
+  category_no: number,
+  board: string,
+  category_name: string
+}

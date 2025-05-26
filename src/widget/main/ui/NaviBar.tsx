@@ -1,4 +1,4 @@
-import { BoardName } from "@/entity/board/type/BoardTypes";
+import { BoardName } from "@/entity/board/type/boardTypes";
 import css from "@/entity/main/css/nav_bar.module.css";
 import { Breadcrumbs, Link as MuiLink } from "@mui/material";
 import NextLink from "next/link";

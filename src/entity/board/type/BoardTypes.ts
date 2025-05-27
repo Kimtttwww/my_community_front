@@ -15,7 +15,7 @@ export type Board = {
 };
 
 export type Category = {
-  category_no: number,
+  categoryNo: number,
   board: string,
-  category_name: string
-}
+  categoryName: string
+} | undefined;

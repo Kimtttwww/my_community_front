@@ -9,7 +9,7 @@ export default async function BoardListPage({ domain }: ownProps) {
   const { boards, conut } = await getBoardList(domain);
   const title = await getBoardTitle(domain);
 
-  return (<div className="flex" style={{ justifyContent: 'center', alignItems: 'center' }}>
+  return (<div className="flex justifyContentCenter" style={{ alignItems: 'center' }}>
     <div style={{ minWidth: '600px', minHeight: '750px', flexDirection: 'column', margin: '50px auto 0' }}>
       <h2 className="flex" style={{ marginBottom: '15px' }}>{title}</h2>
 

@@ -18,3 +18,7 @@ a {
 .flex {
   display: flex;
 }
+
+.justifyContentCenter {
+  justify-content: center;
+}

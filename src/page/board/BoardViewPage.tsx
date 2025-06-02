@@ -1,4 +1,4 @@
-import css from "@/entity/board/css/viewPage.module.css";
+import css from "@/entity/board/ui/viewPage.module.css";
 import { getBoard, getBoardTitle } from "@/feature/board/api/boardGetApi";
 
 type ownProps = {

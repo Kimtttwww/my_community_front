@@ -1,48 +1,72 @@
 'use client'
 
-import css from "@/entity/board/css/writePage.module.css";
-import { Category } from "@/entity/board/type/boardTypes";
+import { Category } from "@/entity/board/model/boardTypes";
+import { BoardValidSchema } from "@/entity/board/model/BoardValidSchema";
+import css from "@/entity/board/ui/writePage.module.css";
 import { getBoardTitle, getCategoryList } from "@/feature/board/api/boardGetApi";
+import { extractMessagesToFieldError } from "@/shared/lib/ValidUtils";
+import { FormInputsErrorMessages } from "@/shared/model/shareTypes";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
+import { FieldErrors, FieldValues, useForm } from "react-hook-form";
+import * as yup from "yup";
 
 type ownProps = {
   domain: string
 };
 
+const schema = yup.object({
+  title: BoardValidSchema.title,
+  content: BoardValidSchema.content
+});
+
 export default function BoardWritePage({ domain }: ownProps) {
-  const [title, setTitle] = useState<string>('');
+  const [boardTitle, setBoardTitle] = useState<string>('');
   const [categoryList, setCategoryList] = useState<Category[]>([]);
+  const [validState, setValidState] = useState<FormInputsErrorMessages>({});
+  const { register, handleSubmit } = useForm({ resolver: yupResolver(schema) });
 
   useEffect(() => {
     Promise.allSettled([getBoardTitle(domain), getCategoryList(domain)])
       .then((results) => results.filter((result) => result.status == 'fulfilled').map((res) => res.value))
       .then((res) => {
-        const [title, categoryList] = res;
-        setTitle(title as string);
+        const [boardTitle, categoryList] = res;
+        setBoardTitle(boardTitle as string);
         setCategoryList(categoryList as Category[]);
       });
   }, []);
 
+  // TODO 기능 구현 필요
+  function handleValid(inputDatas: FieldValues) {
+    console.log('유효함');
+    console.log(inputDatas);
+
+  }
+
+  function handleInvalid<T extends Record<string, any>>(errors: FieldErrors<T>) {
+    setValidState(extractMessagesToFieldError(errors));
+  }
+
   // TODO 기능 추가 필요
   return (<div className="flex" style={{ width: '1000px', minHeight: '600px', flexDirection: 'column', margin: '0 auto', marginTop: '50px' }}>
-    <h1 className='flex' style={{ textTransform: 'uppercase', marginBottom: '5px' }}>{title}</h1>
+    <h1 className='flex' style={{ textTransform: 'uppercase', marginBottom: '5px' }}>{boardTitle}</h1>
     <hr style={{ borderColor: 'gray' }} />
 
-    <form style={{ margin: '30px 50px', padding: '15px 0' }}>
+    <form onSubmit={handleSubmit(handleValid, handleInvalid)} style={{ margin: '30px 50px', padding: '15px 0' }}>
       <article className={`${css.spacing}`}>
-        <TextField size="small" label='제목 입력' style={{ minWidth: '50%', marginRight: '15px' }} />
+        <TextField {...register('title')} error={Boolean(validState?.title)} helperText={validState.title} size="small" label='제목' style={{ minWidth: '50%', marginRight: '15px' }} />
         <FormControl size="small" style={{ minWidth: '25%' }}>
           <InputLabel>카테고리</InputLabel>
-          <Select label='카테고리'>
-            <MenuItem value={''}>일반</MenuItem>
-            {(categoryList).map((category) => (<MenuItem key={category?.categoryName} value={category?.categoryNo}>{category?.categoryName}</MenuItem>))}
+          <Select label='카테고리' defaultValue={0}>
+            <MenuItem value={0}>일반</MenuItem>
+            {categoryList.map((category) => (<MenuItem key={category?.categoryName} value={category?.categoryNo}>{category?.categoryName}</MenuItem>))}
           </Select>
         </FormControl>
       </article>
 
       <article className={`${css.spacing}`}>
-        <TextField fullWidth multiline minRows={10}></TextField>
+        <TextField {...register('content')} error={Boolean(validState?.content)} helperText={validState.content} fullWidth multiline minRows={10}></TextField>
       </article>
 
       <article className="flex" style={{ flexDirection: 'row-reverse' }}>

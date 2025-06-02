@@ -1,4 +1,4 @@
-export class BoardAPI {
+export class BoardPath {
   static readonly HOST = process.env.SERVER_URL;
   static readonly BOARD_NAMES = this.HOST + '/metaboard/';
   static readonly BOARD_LIST = (domain: string) => `${this.HOST}/${domain}/`;

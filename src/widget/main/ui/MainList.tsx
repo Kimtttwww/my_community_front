@@ -1,7 +1,7 @@
 'use client'
 
-import { Board, BoardName } from "@/entity/board/type/BoardTypes";
-import css from "@/entity/main/css/list.module.css";
+import { Board, BoardName } from "@/entity/board/model/boardTypes";
+import css from "@/entity/main/ui/list.module.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 

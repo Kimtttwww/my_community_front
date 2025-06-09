@@ -6,8 +6,8 @@ import axios, { AxiosResponse } from "axios";
 export default function testingPathAndPage() {
 
 	function handleClick() {
-		axios.get(GuestPath.HOST + '/guest/test')
-			.then((res: AxiosResponse<string>) => {
+		axios.get(GuestPath.HOST + '/guest/test', { withCredentials: true })
+			.then((res: AxiosResponse) => {
 				console.log(res.data);
 			});
 	}

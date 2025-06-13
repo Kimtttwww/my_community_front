@@ -1,5 +1,6 @@
 import { getBoardList, getBoardTitle } from "@/feature/board/api/boardGetApi";
 import BoardList from "@/widget/board/ui/BoardList";
+import { Pagination } from "@mui/material";
 
 type ownProps = {
 	domain: string,
@@ -16,7 +17,8 @@ export default async function BoardListPage({ domain }: ownProps) {
 			<BoardList boards={boards} />
 
 			{/* TODO 작성 페이지 이동 ui 필요 */}
-			{/* TODO 페이징 필요  */}
+
+			<Pagination defaultPage={1} count={10} boundaryCount={5} style={{ justifySelf: 'center', marginTop: '30px' }} />
 		</div>
 	</div>);
 }

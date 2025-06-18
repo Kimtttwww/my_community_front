@@ -26,7 +26,7 @@ export default function GuestLogupPage() {
 	function handleValid(inputDatas: FieldValues) {
 		inputDatas.nickname = inputDatas.name;
 
- 		axios.post(GuestPath.HOST + '/guest/logup', inputDatas)
+		axios.post(GuestPath.HOST + '/guest/logup', inputDatas)
 			.then(() => {
 				alert('새로운 뉴비는 언제나 환영이야!');
 				nav.push('/login');

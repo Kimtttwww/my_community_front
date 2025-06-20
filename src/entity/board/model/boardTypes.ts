@@ -19,3 +19,8 @@ export type Category = {
 	board: string,
 	categoryName: string
 } | undefined;
+
+export type BoardSearchOption = {
+	perPage?: number,
+	currentPage?: number
+};

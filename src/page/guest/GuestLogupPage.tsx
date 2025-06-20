@@ -4,10 +4,10 @@ import { GuestPath } from "@/entity/guest/model/GuestPath";
 import { GuestValidSchema } from "@/entity/guest/model/GuestValidSchema";
 import css from "@/entity/guest/ui/loginPage.module.css";
 import useFormInputErrorHandler from "@/shared/lib/useFormInputErrorHandler";
+import OurTitle from "@/shared/ui/OurTitle";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, TextField } from "@mui/material";
 import axios from "axios";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -37,7 +37,7 @@ export default function GuestLogupPage() {
 	return (<div className="flex justifyContentCenter" style={{ paddingTop: '75px' }}>
 		<section style={{ width: '400px', minHeight: '300px', border: '1px solid lightgray', borderRadius: '10px', marginTop: '30px', padding: '0 20px' }}>
 			<article className="flex justifyContentCenter">
-				<h2 style={{ margin: '50px 0' }}><Link href={'/'}>My Community</Link></h2>
+				<OurTitle />
 			</article>
 			<form id="form" onSubmit={handleSubmit(handleValid, handleDefaultInvalid)} className="flex" style={{ minHeight: '150px', flexDirection: 'column', justifyContent: 'space-around' }}>
 				<TextField label="아이디" {...register('id')} error={Boolean(validState?.id)} helperText={validState.id} autoFocus size="small" className={`${css.spacing}`} />

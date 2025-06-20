@@ -2,14 +2,16 @@
 
 import { Board } from "@/entity/board/model/boardTypes";
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 type ownProps = {
 	boards: Board[]
 }
 
 export default function BoardList({ boards }: ownProps) {
+	const pathName = usePathname();
 	const nav = useRouter();
+
 	// TODO 익명 글 작성자 처리 필요
 	return (
 		<Table style={{ borderTop: '2px solid black' }}>
@@ -24,8 +26,7 @@ export default function BoardList({ boards }: ownProps) {
 			<TableBody>
 				{boards.map((board) => {
 					return (
-						// TODO 해당 게시글로 이동을 위한 경로 설정 필요
-						<TableRow key={'bno_' + board.boardNo} onClick={() => nav.push(`/${board}/${board.boardNo}`)}>
+						<TableRow key={'bno_' + board.boardNo} onClick={() => nav.push(`${pathName}/${board.boardNo}`)}>
 							<TableCell key={'title_' + board.boardNo} component={'th'}>{board.title}</TableCell>
 							<TableCell key={'writer_' + board.boardNo} align="center">{board.writer}</TableCell>
 							<TableCell key={'created_' + board.boardNo} align="center">{board.created}</TableCell>

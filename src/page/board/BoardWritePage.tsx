@@ -44,7 +44,6 @@ export default function BoardWritePage({ domain }: ownProps) {
 		console.log(inputDatas);
 	}
 
-	// TODO 기능 추가 필요
 	return (<div className="flex" style={{ width: '1000px', minHeight: '600px', flexDirection: 'column', margin: '0 auto', marginTop: '50px' }}>
 		<h1 className='flex' style={{ textTransform: 'uppercase', marginBottom: '5px' }}>{boardTitle}</h1>
 		<hr style={{ borderColor: 'gray' }} />

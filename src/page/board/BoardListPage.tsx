@@ -4,10 +4,14 @@ import { Pagination } from "@mui/material";
 
 type ownProps = {
 	domain: string,
+	searchParams: {
+		perPage?: string,
+		currentPage?: string
+	}
 };
 
-export default async function BoardListPage({ domain }: ownProps) {
-	const { boards, conut } = await getBoardList(domain);
+export default async function BoardListPage({ domain, searchParams }: ownProps) {
+	const { boards, count } = await getBoardList(domain);
 	const title = await getBoardTitle(domain);
 
 	return (<div className="flex justifyContentCenter" style={{ alignItems: 'center' }}>
@@ -16,9 +20,9 @@ export default async function BoardListPage({ domain }: ownProps) {
 
 			<BoardList boards={boards} />
 
-			{/* TODO 작성 페이지 이동 ui 필요 */}
+			<Pagination defaultPage={Number(searchParams?.currentPage) || 1} count={Math.ceil(count / (Number(searchParams?.perPage) || 10))} boundaryCount={5} style={{ justifySelf: 'center', marginTop: '30px' }} />
 
-			<Pagination defaultPage={1} count={10} boundaryCount={5} style={{ justifySelf: 'center', marginTop: '30px' }} />
+			{/* TODO 작성 페이지 이동 ui 필요 */}
 		</div>
 	</div>);
 }

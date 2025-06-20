@@ -5,7 +5,7 @@ import { Board, BoardName, Category } from "@/entity/board/model/boardTypes";
 import axios from "axios";
 
 type getBoardListResult = {
-	conut: number,
+	count: number,
 	boards: Board[];
 }
 

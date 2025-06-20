@@ -1,4 +1,3 @@
-import { BoardSearchOption } from "@/entity/board/model/boardTypes";
 import { getBoardList, getBoardNames } from "@/feature/board/api/boardGetApi";
 import MainList from "@/widget/main/ui/MainList";
 import NaviBar from "@/widget/main/ui/NaviBar";

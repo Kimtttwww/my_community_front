@@ -1,12 +1,15 @@
 'use client'
 
+import { BoardPath } from "@/entity/board/model/BoardPath";
 import { Category } from "@/entity/board/model/boardTypes";
 import { BoardValidSchema } from "@/entity/board/model/BoardValidSchema";
 import css from "@/entity/board/ui/writePage.module.css";
+import { GuestPath } from "@/entity/guest/model/GuestPath";
 import { getBoardTitle, getCategoryList } from "@/feature/board/api/boardGetApi";
 import useFormInputErrorHandler from "@/shared/lib/useFormInputErrorHandler";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -39,9 +42,14 @@ export default function BoardWritePage({ domain }: ownProps) {
 	// TODO 기능 구현 필요
 	function handleValid(inputDatas: FieldValues) {
 		console.log('유효함');
-
-		// inputDatas.gid = 
 		console.log(inputDatas);
+
+		// TODO 여기에 작성자 식별자 삽입 필요
+		inputDatas.writer = '???';
+
+		// axios.post(BoardPath.BOARD_LIST(domain) + 'write' , inputDatas)
+		// 	.then(() => ('게시글 작성 성공'))
+		// 	.catch(() => alert('게시글 작성 실패'))
 	}
 
 	return (<div className="flex" style={{ width: '1000px', minHeight: '600px', flexDirection: 'column', margin: '0 auto', marginTop: '50px' }}>

@@ -20,6 +20,7 @@ export default async function BoardListPage({ domain, searchParams }: ownProps) 
 
 			<BoardList boards={boards} />
 
+			{/* TODO 페이지 클릭시 조건 적용 후 조회 필요 */}
 			<Pagination defaultPage={Number(searchParams?.currentPage) || 1} count={Math.ceil(count / (Number(searchParams?.perPage) || 10))} boundaryCount={5} style={{ justifySelf: 'center', marginTop: '30px' }} />
 
 			{/* TODO 작성 페이지 이동 ui 필요 */}

@@ -1,12 +1,13 @@
 'use client'
 
 import { GuestPath } from "@/entity/guest/model/GuestPath";
-import axios, { AxiosResponse } from "axios";
+import myAxios from "@/shared/lib/myAxios";
+import { AxiosResponse } from "axios";
 
 export default function testingPathAndPage() {
 
 	function handleClick() {
-		axios.get(GuestPath.HOST + '/guest/test', { withCredentials: true })
+		myAxios.get(GuestPath.HOST + '/guest/test', { withCredentials: true })
 			.then((res: AxiosResponse) => {
 				console.log(res.data);
 			});

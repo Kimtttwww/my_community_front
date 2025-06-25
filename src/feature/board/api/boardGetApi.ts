@@ -1,7 +1,7 @@
 'use server'
 
 import { BoardPath } from "@/entity/board/model/BoardPath";
-import { Board, BoardName, Category } from "@/entity/board/model/boardTypes";
+import { Board, BoardName, BoardSearchOption, Category } from "@/entity/board/model/boardTypes";
 import axios from "axios";
 
 type getBoardListResult = {
@@ -14,8 +14,9 @@ export async function getBoardNames(): Promise<BoardName[]> {
 	return res?.data;
 }
 
-export async function getBoardList(domain: string, searchOption?: string | URLSearchParams): Promise<getBoardListResult> {
-	const res = await axios.get(BoardPath.BOARD_LIST(domain) + (searchOption ? '?' + searchOption.toString() : ''));
+export async function getBoardList(domain: string, searchOption?: BoardSearchOption): Promise<getBoardListResult> {
+	const searchOptionWrapper = searchOption ? new URLSearchParams(Object.entries(searchOption).map((value) => [value[0], String(value[1])])) : null;
+	const res = await axios.get(BoardPath.BOARD_LIST(domain) + (searchOptionWrapper ? '?' + searchOptionWrapper.toString() : ''));
 	return res?.data;
 }
 

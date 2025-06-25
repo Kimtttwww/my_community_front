@@ -1,6 +1,6 @@
 import { getBoardList, getBoardTitle } from "@/feature/board/api/boardGetApi";
+import InteractivePagination from "@/shared/ui/InteractivePagination";
 import BoardList from "@/widget/board/ui/BoardList";
-import { Pagination } from "@mui/material";
 
 type ownProps = {
 	domain: string,
@@ -11,7 +11,7 @@ type ownProps = {
 };
 
 export default async function BoardListPage({ domain, searchParams }: ownProps) {
-	const { boards, count } = await getBoardList(domain);
+	const { boards, count } = await getBoardList(domain, { currentPage: Number(searchParams.currentPage) || 1 });
 	const title = await getBoardTitle(domain);
 
 	return (<div className="flex justifyContentCenter" style={{ alignItems: 'center' }}>
@@ -20,8 +20,7 @@ export default async function BoardListPage({ domain, searchParams }: ownProps) 
 
 			<BoardList boards={boards} />
 
-			{/* TODO 페이지 클릭시 조건 적용 후 조회 필요 */}
-			<Pagination defaultPage={Number(searchParams?.currentPage) || 1} count={Math.ceil(count / (Number(searchParams?.perPage) || 10))} boundaryCount={5} style={{ justifySelf: 'center', marginTop: '30px' }} />
+			<InteractivePagination allCount={count} />
 
 			{/* TODO 작성 페이지 이동 ui 필요 */}
 		</div>

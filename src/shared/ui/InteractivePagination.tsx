@@ -2,6 +2,7 @@
 
 import { Pagination } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
+import { combineURLSearchParams } from "../lib/searchParamsUtils";
 
 type OwnProps = {
 	allCount: number
@@ -12,9 +13,7 @@ export default function InteractivePagination({ allCount }: OwnProps) {
 	const nav = useRouter();
 
 	function handleChange(_: React.ChangeEvent<unknown>, selectPage: number) {
-		const url = new URLSearchParams(searchParams);
-		url.set('currentPage', String(selectPage));
-
+		const url = combineURLSearchParams(searchParams, { currentPage: selectPage });
 		nav.push('?' + url.toString());
 	}
 

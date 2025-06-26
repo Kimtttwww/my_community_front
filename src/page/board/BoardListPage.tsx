@@ -1,28 +1,60 @@
+'use client'
+
+import { BoardPath } from "@/entity/board/model/BoardPath";
+import { Board } from "@/entity/board/model/boardTypes";
 import { getBoardList, getBoardTitle } from "@/feature/board/api/boardGetApi";
+import { combineURLSearchParams } from "@/shared/lib/searchParamsUtils";
 import InteractivePagination from "@/shared/ui/InteractivePagination";
 import BoardList from "@/widget/board/ui/BoardList";
+import { Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-type ownProps = {
-	domain: string,
-	searchParams: {
-		perPage?: string,
-		currentPage?: string
+export default function BoardListPage() {
+	const { domain } = useParams();
+	const searchParams = useSearchParams();
+	const [boards, setBoards] = useState<Board[]>([]);
+	const [count, setCount] = useState<number>(0);
+	const [title, setTitle] = useState<string>(domain as string);
+	const [perPage] = useState<number>(Number(searchParams.get('perPage')) || 10);
+	const nav = useRouter();
+
+	useEffect(() => {
+		(async () => setTitle(await getBoardTitle(domain as string)))();
+	}, []);
+
+	useEffect(() => {
+		(async () => {
+			const { boards, count } = await getBoardList(domain as string, Object.fromEntries(searchParams));
+
+			setBoards(boards);
+			setCount(count);
+		})();
+	}, [searchParams]);
+
+	function handleChange(e: SelectChangeEvent) {
+		const url = combineURLSearchParams(searchParams, { perPage: e.target.value, currentPage: 1 })
+		nav.push('?' + url.toString());
 	}
-};
-
-export default async function BoardListPage({ domain, searchParams }: ownProps) {
-	const { boards, count } = await getBoardList(domain, { currentPage: Number(searchParams.currentPage) || 1 });
-	const title = await getBoardTitle(domain);
 
 	return (<div className="flex justifyContentCenter" style={{ alignItems: 'center' }}>
 		<div style={{ minWidth: '600px', minHeight: '750px', flexDirection: 'column', margin: '50px auto 0' }}>
-			<h2 className="flex" style={{ marginBottom: '15px' }}>{title}</h2>
+			<section className="flex" style={{ justifyContent: 'space-between' }}>
+				<h2 className="flex" style={{ marginBottom: '15px' }}>{title}</h2>
+				<article>
+					<Select size="small" value={String(perPage)} onChange={handleChange}>
+						<MenuItem value={5}>5</MenuItem>
+						<MenuItem value={10}>10</MenuItem>
+						<MenuItem value={25}>25</MenuItem>
+						<MenuItem value={50}>50</MenuItem>
+					</Select>
+					<Button onClick={() => nav.push(`/${domain}/write`)}>글 작성</Button>
+				</article>
+			</section>
 
 			<BoardList boards={boards} />
 
 			<InteractivePagination allCount={count} />
-
-			{/* TODO 작성 페이지 이동 ui 필요 */}
 		</div>
 	</div>);
 }

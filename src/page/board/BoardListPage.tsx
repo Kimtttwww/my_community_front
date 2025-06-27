@@ -1,6 +1,5 @@
 'use client'
 
-import { BoardPath } from "@/entity/board/model/BoardPath";
 import { Board } from "@/entity/board/model/boardTypes";
 import { getBoardList, getBoardTitle } from "@/feature/board/api/boardGetApi";
 import { combineURLSearchParams } from "@/shared/lib/searchParamsUtils";
@@ -20,16 +19,16 @@ export default function BoardListPage() {
 	const nav = useRouter();
 
 	useEffect(() => {
-		(async () => setTitle(await getBoardTitle(domain as string)))();
+		getBoardTitle(domain as string)
+			.then((title) => setTitle(title));
 	}, []);
 
 	useEffect(() => {
-		(async () => {
-			const { boards, count } = await getBoardList(domain as string, Object.fromEntries(searchParams));
-
-			setBoards(boards);
-			setCount(count);
-		})();
+		getBoardList(domain as string, Object.fromEntries(searchParams))
+			.then(({ boards, count }) => {
+				setBoards(boards);
+				setCount(count);
+			});
 	}, [searchParams]);
 
 	function handleChange(e: SelectChangeEvent) {
@@ -41,6 +40,9 @@ export default function BoardListPage() {
 		<div style={{ minWidth: '600px', minHeight: '750px', flexDirection: 'column', margin: '50px auto 0' }}>
 			<section className="flex" style={{ justifyContent: 'space-between' }}>
 				<h2 className="flex" style={{ marginBottom: '15px' }}>{title}</h2>
+
+				{/* TODO 카테고리와 검색어를 받는 검색창 추가 필요 */}
+
 				<article>
 					<Select size="small" value={String(perPage)} onChange={handleChange}>
 						<MenuItem value={5}>5</MenuItem>

@@ -9,6 +9,7 @@ import myAxios from "@/shared/lib/myAxios";
 import useFormInputErrorHandler from "@/shared/lib/useFormInputErrorHandler";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -20,6 +21,7 @@ type ownProps = {
 const schema = yup.object({
 	title: BoardValidSchema.title,
 	content: BoardValidSchema.content
+	, category: yup.number().required()
 });
 
 export default function BoardWritePage({ domain }: ownProps) {
@@ -27,28 +29,27 @@ export default function BoardWritePage({ domain }: ownProps) {
 	const [categoryList, setCategoryList] = useState<Category[]>([]);
 	const { register, handleSubmit } = useForm({ resolver: yupResolver(schema) });
 	const { validState, handleDefaultInvalid } = useFormInputErrorHandler();
+	const nav = useRouter();
 
 	useEffect(() => {
-		Promise.allSettled([getBoardTitle(domain), getCategoryList(domain)])
-			.then((results) => results.filter((result) => result.status == 'fulfilled').map((res) => res.value))
-			.then((res) => {
-				const [boardTitle, categoryList] = res;
-				setBoardTitle(boardTitle as string);
-				setCategoryList(categoryList as Category[]);
-			});
+		getBoardTitle(domain)
+			.then((boardTitle) => setBoardTitle(boardTitle));
+		getCategoryList(domain)
+			.then((categoryList) => setCategoryList(categoryList));
 	}, []);
 
 	// TODO 기능 구현 필요
 	function handleValid(inputDatas: FieldValues) {
-		console.log('유효함');
-		console.log(inputDatas);
-
 		// TODO 여기에 작성자 식별자 삽입 필요
 		inputDatas.writer = '???';
 
+		console.log(inputDatas);
 		myAxios.post(BoardPath.BOARD_LIST(domain) + 'write', inputDatas)
-		// 	.then(() => ('게시글 작성 성공'))
-		// 	.catch(() => alert('게시글 작성 실패'))
+			.then(() => {
+				alert('게시글 작성 성공');
+				nav.push(BoardPath.BOARD_LIST(domain));
+			})
+			.catch(() => alert('게시글 작성 실패'))
 	}
 
 	return (<div className="flex" style={{ width: '1000px', minHeight: '600px', flexDirection: 'column', margin: '0 auto', marginTop: '50px' }}>
@@ -60,7 +61,7 @@ export default function BoardWritePage({ domain }: ownProps) {
 				<TextField {...register('title')} error={Boolean(validState?.title)} helperText={validState.title} size="small" label='제목' style={{ minWidth: '50%', marginRight: '15px' }} />
 				<FormControl size="small" style={{ minWidth: '25%' }}>
 					<InputLabel>카테고리</InputLabel>
-					<Select label='카테고리' defaultValue={0}>
+					<Select {...register('category')} label='카테고리' defaultValue={0}>
 						<MenuItem value={0}>일반</MenuItem>
 						{categoryList.map((category) => (<MenuItem key={category?.categoryName} value={category?.categoryNo}>{category?.categoryName}</MenuItem>))}
 					</Select>

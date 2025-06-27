@@ -16,6 +16,7 @@ export default async function BoardViewPage({ domain, boardNo }: ownProps) {
 
     <section className={`flex ${css.spacing}`} style={{ flexDirection: 'column', padding: '3px 0' }}>
       <article><b>{board?.title}</b></article>
+			{/* TODO 아마 이쯤에 이 글의 카테고리가 필요함 */}
       <article>{board?.writer}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{board?.created}</article>
     </section>
     <hr className={`${css.spacing}`} style={{ borderColor: 'lightgray' }} />

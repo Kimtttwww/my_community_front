@@ -16,7 +16,6 @@ export default function MainList({ listName, listContent, domain }: OwnProps) {
 	const navi = useRouter();
 	const { getWriterNickname, setWriter } = useReplaceWriter();
 
-	// TODO 익명 글 작성자 처리 필요
 	return (
 		<section className="flex" style={{ width: '560px', minHeight: '100px', flexDirection: 'column', margin: '15px 5px', padding: '5px' }}>
 			<Link href={`/${listName.board}`} style={{ fontSize: 'x-large', fontWeight: "bold", textTransform: 'uppercase', marginBottom: '15px' }}>{listName.subtitle || listName.board}</Link>

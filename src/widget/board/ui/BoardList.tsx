@@ -15,7 +15,6 @@ export default function BoardList({ boards, domain }: OwnProps) {
 	const nav = useRouter();
 	const { getWriterNickname, setWriter } = useReplaceWriter();
 
-	// TODO 익명 글 작성자 처리 필요
 	return (
 		<Table style={{ borderTop: '2px solid black' }}>
 			<TableHead>

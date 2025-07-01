@@ -24,7 +24,7 @@ export default function BoardListPage() {
 	}, []);
 
 	useEffect(() => {
-		getBoardList(domain as string, Object.fromEntries(searchParams))
+		getBoardList(domain as string, searchParams)
 			.then(({ boards, count }) => {
 				setBoards(boards);
 				setCount(count);
@@ -54,7 +54,7 @@ export default function BoardListPage() {
 				</article>
 			</section>
 
-			<BoardList boards={boards} />
+			<BoardList boards={boards} domain={domain as string} />
 
 			<InteractivePagination allCount={count} />
 		</div>

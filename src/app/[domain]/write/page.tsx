@@ -1,11 +1,12 @@
+import { BoardDomain } from "@/entity/board/model/boardTypes";
 import BoardWritePage from "@/page/board/BoardWritePage";
 
-type ownProps = {
+type OwnProps = {
 	params: {
-		domain: string
+		domain: BoardDomain
 	}
 };
 
-export default async function BoardWritePath({ params }: ownProps) {
+export default async function BoardWritePath({ params }: OwnProps) {
 	return (<BoardWritePage {...(await params)} />);
 }

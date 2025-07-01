@@ -1,12 +1,13 @@
+import { BoardDomain } from "@/entity/board/model/boardTypes";
 import BoardViewPage from "@/page/board/BoardViewPage";
 
-type ownProps = {
+type OwnProps = {
 	params: {
-		domain: string,
+		domain: BoardDomain,
 		boardNo: string
 	}
 };
 
-export default async function BoardViewPath({ params }: ownProps) {
+export default async function BoardViewPath({ params }: OwnProps) {
 	return (<BoardViewPage {...(await params)} />);
 }

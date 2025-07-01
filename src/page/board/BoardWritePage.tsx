@@ -1,7 +1,7 @@
 'use client'
 
 import { BoardPath } from "@/entity/board/model/BoardPath";
-import { Category } from "@/entity/board/model/boardTypes";
+import { BoardDomain, Category } from "@/entity/board/model/boardTypes";
 import { BoardValidSchema } from "@/entity/board/model/BoardValidSchema";
 import css from "@/entity/board/ui/writePage.module.css";
 import { getBoardTitle, getCategoryList } from "@/feature/board/api/boardGetApi";
@@ -14,8 +14,8 @@ import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
 
-type ownProps = {
-	domain: string
+type OwnProps = {
+	domain: BoardDomain
 };
 
 const schema = yup.object({
@@ -24,7 +24,7 @@ const schema = yup.object({
 	, category: yup.number().required()
 });
 
-export default function BoardWritePage({ domain }: ownProps) {
+export default function BoardWritePage({ domain }: OwnProps) {
 	const [boardTitle, setBoardTitle] = useState<string>('');
 	const [categoryList, setCategoryList] = useState<Category[]>([]);
 	const { register, handleSubmit } = useForm({ resolver: yupResolver(schema) });

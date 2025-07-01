@@ -4,9 +4,8 @@ import NaviBar from "@/widget/main/ui/NaviBar";
 
 export default async function MainPage() {
 	const boardNames = (await getBoardNames()).filter(({ board }) => board != 'qna' && board != 'faq');
-	const searchOption = new URLSearchParams([['perPage', '5']])
 
-	const boardLists = (await Promise.allSettled(boardNames.map(({ board }) => getBoardList(board, searchOption))))
+	const boardLists = (await Promise.allSettled(boardNames.map(({ board }) => getBoardList(board, { perPage: 5 }))))
 		.filter((req) => req.status == 'fulfilled')
 		.map((result) => result.value.boards)
 
@@ -15,7 +14,7 @@ export default async function MainPage() {
 		<NaviBar names={boardNames} />
 
 		<div className="flex" style={{ flexWrap: "wrap", justifyContent: 'space-around' }}>
-			{boardLists.map((boardList, i) => (<MainList key={boardNames[i].board} listName={boardNames[i]} listContent={boardList} />))}
+			{boardLists.map((boardList, i) => (<MainList key={boardNames[i].board} listName={boardNames[i]} listContent={boardList} domain={boardNames[i].board} />))}
 		</div>
 	</>);
 }

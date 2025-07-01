@@ -5,12 +5,12 @@ import GuestAvatar from "@/widget/guest/ui/GuestAvatar";
 import { Breadcrumbs, Link as MuiLink } from "@mui/material";
 import NextLink from "next/link";
 
-type ownProps = {
+type OwnProps = {
 	names: BoardName[],
 	children?: React.ReactNode
 }
 
-export default function NaviBar({ names, children }: ownProps) {
+export default function NaviBar({ names, children }: OwnProps) {
 	return (
 		<section className="flex" style={{ minHeight: '200px', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center' }}>
 			{children}

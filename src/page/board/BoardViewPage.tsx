@@ -1,12 +1,13 @@
+import { BoardDomain } from "@/entity/board/model/boardTypes";
 import css from "@/entity/board/ui/viewPage.module.css";
 import { getBoard, getBoardTitle } from "@/feature/board/api/boardGetApi";
 
-type ownProps = {
-  domain: string,
+type OwnProps = {
+  domain: BoardDomain,
   boardNo: string
 };
 
-export default async function BoardViewPage({ domain, boardNo }: ownProps) {
+export default async function BoardViewPage({ domain, boardNo }: OwnProps) {
   const board = await getBoard(domain, Number(boardNo));
   const title = await getBoardTitle(domain);
 

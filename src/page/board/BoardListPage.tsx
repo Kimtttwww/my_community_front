@@ -50,7 +50,7 @@ export default function BoardListPage() {
 						<MenuItem value={25}>25</MenuItem>
 						<MenuItem value={50}>50</MenuItem>
 					</Select>
-					<Button onClick={() => nav.push(`/${domain}/write`)}>글 작성</Button>
+					{domain !== 'notice' ? <Button onClick={() => nav.push(`/${domain}/write`)}>글 작성</Button> : ''}
 				</article>
 			</section>
 

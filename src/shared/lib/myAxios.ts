@@ -67,5 +67,4 @@ function gotoLoginPage() {
 	}
 }
 
-// TODO 해당 인터셉터의 동작 검증 필요
 export default myAxios;

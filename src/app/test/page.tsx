@@ -7,9 +7,10 @@ import { AxiosResponse } from "axios";
 export default function testingPathAndPage() {
 
 	function handleClick() {
-		myAxios.get(GuestPath.HOST + '/guest/test', { withCredentials: true })
+		myAxios.get(GuestPath.HOST + '/guest/test')
 			.then((res: AxiosResponse) => {
 				console.log(res.data);
+				alert('성공!');
 			});
 	}
 

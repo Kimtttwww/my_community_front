@@ -12,7 +12,7 @@ type OwnProps = {
 
 export default function NaviBar({ names, children }: OwnProps) {
 	return (
-		<section className="flex" style={{ minHeight: '200px', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center' }}>
+		<section className="flex flexDirectionColumn" style={{ minHeight: '200px', justifyContent: 'space-evenly', alignItems: 'center' }}>
 			{children}
 			<div className="flex" style={{ width: '100%', flexDirection: 'row-reverse', position: 'absolute', top: '0', right: '0' }}>
 				<GuestAvatar />

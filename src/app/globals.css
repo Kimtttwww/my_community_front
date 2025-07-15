@@ -19,6 +19,10 @@ a {
 	display: flex;
 }
 
+.flexDirectionColumn {
+	flex-direction: column;
+}
+
 .justifyContentCenter {
 	justify-content: center;
 }

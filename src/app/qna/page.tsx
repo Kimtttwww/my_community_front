@@ -1,5 +1,5 @@
-import QnaListPage from "@/page/qna/QnaListPage";
+import QnaPage from "@/page/qna/QnaPage";
 
 export default function QnaListPath() {
-	return (<QnaListPage />);
+	return (<QnaPage />);
 }

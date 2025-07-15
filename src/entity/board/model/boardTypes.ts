@@ -1,4 +1,4 @@
-export type BoardDomain = 'anonymous' | 'notice' | 'gallery' | string;
+export type BoardDomain = 'anonymous' | 'notice' | 'gallery' | 'qna' | 'faq' | string;
 
 export type BoardName = {
 	board: BoardDomain

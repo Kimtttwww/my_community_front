@@ -36,7 +36,7 @@ export default function GuestLoginPage() {
 			<article className="flex justifyContentCenter">
 				<OurTitle />
 			</article>
-			<form id="form" onSubmit={handleSubmit(handleValid, handleDefaultInvalid)} className="flex" style={{ height: '150px', flexDirection: 'column', justifyContent: 'space-around' }}>
+			<form id="form" onSubmit={handleSubmit(handleValid, handleDefaultInvalid)} className="flex flexDirectionColumn" style={{ height: '150px', justifyContent: 'space-around' }}>
 				<TextField label="아이디" {...register('id')} error={Boolean(validState?.id)} helperText={validState.id} autoFocus className={`${css.spacing}`} />
 				<TextField type="password" label="비밀번호" {...register('pwd')} error={Boolean(validState?.pwd)} helperText={validState.pwd} className={`${css.spacing}`} />
 			</form>

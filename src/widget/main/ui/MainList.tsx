@@ -17,9 +17,9 @@ export default function MainList({ listName, listContent, domain }: OwnProps) {
 	const { getWriterNickname, setWriter } = useReplaceWriter();
 
 	return (
-		<section className="flex" style={{ width: '560px', minHeight: '100px', flexDirection: 'column', margin: '15px 5px', padding: '5px' }}>
+		<section className="flex flexDirectionColumn" style={{ width: '560px', minHeight: '100px', margin: '15px 5px', padding: '5px' }}>
 			<Link href={`/${listName.board}`} style={{ fontSize: 'x-large', fontWeight: "bold", textTransform: 'uppercase', marginBottom: '15px' }}>{listName.subtitle || listName.board}</Link>
-			<section className="flex" style={{ flexDirection: 'column' }}>
+			<section className="flex flexDirectionColumn">
 				{listContent.map((board) => {
 					let writer: any = board.writer;
 					if (domain === 'anonymous') {

@@ -21,6 +21,7 @@ type OwnProps = {
 const schema = yup.object({
 	title: BoardValidSchema.title,
 	content: BoardValidSchema.content
+	// TODO category 처리 방안 필요
 	, category: yup.number().required()
 });
 
@@ -52,7 +53,7 @@ export default function BoardWritePage({ domain }: OwnProps) {
 			.catch(() => alert('게시글 작성 실패'))
 	}
 
-	return (<div className="flex" style={{ width: '1000px', minHeight: '600px', flexDirection: 'column', margin: '0 auto', marginTop: '50px' }}>
+	return (<div className="flex flexDirectionColumn" style={{ width: '1000px', minHeight: '600px', margin: '0 auto', marginTop: '50px' }}>
 		<h1 className='flex' style={{ textTransform: 'uppercase', marginBottom: '5px' }}>{boardTitle}</h1>
 		<hr style={{ borderColor: 'gray' }} />
 

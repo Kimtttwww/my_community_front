@@ -1,34 +1,41 @@
+'use client'
+
+import { Board } from "@/entity/board/model/boardTypes";
 import { getBoardList } from "@/feature/board/api/boardGetApi";
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { use } from "react";
+import QnaView from "@/widget/board/ui/QnaView";
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { useEffect, useState } from "react";
 
 export default function QnaPage() {
-	const qnaList = use(getBoardList('qna'));
+	const [qnaList, setQnaList] = useState<Board[]>([]);
+	const [targetQna, setTargetQna] = useState<number>();
+
+	useEffect(() => {
+		getBoardList('qna')
+			.then((res) => setQnaList(res.boards));
+	}, []);
 
 	return (<section className="flex justifyContentCenter" style={{ height: '100vh', padding: '50px 30px' }}>
 		{/* TODO qna 목록 절반, 작성 절반(메일 느낌으로, 200개씩 조회, 스크롤위주 + 페이징 최소) */}
-		<article className="flex flexDirectionColumn" style={{ width: '40%', minHeight: '100%', alignItems: 'center', overflowY: 'auto', border: '1px solid #e0e0e0' }}>
+		<Paper variant="outlined" square className="flex flexDirectionColumn" style={{ width: '40%', minHeight: '100%', alignItems: 'center', overflowY: 'auto' }}>
 			<Table>
-				{qnaList && qnaList.count && (<TableHead>
-					<TableRow>
-						<TableCell>제목</TableCell>
-						<TableCell>등록일</TableCell>
-						<TableCell>답변여부</TableCell>
-					</TableRow>
-				</TableHead>)}
+				{qnaList.length > 0 && (<TableHead><TableRow>
+					<TableCell>제목</TableCell>
+					<TableCell>등록일</TableCell>
+					<TableCell>답변여부</TableCell>
+				</TableRow></TableHead>)}
 				<TableBody>
-					{qnaList && qnaList.count ? <>{qnaList.boards.map((qna) => (
-						<TableRow key={qna.boardNo}>
+					{qnaList.length > 0 ? qnaList.map((qna) => (
+						<TableRow key={qna.boardNo} onClick={() => setTargetQna(qna.boardNo)} hover selected={qna.boardNo === targetQna}>
 							<TableCell key={qna.boardNo + 'title'}>{qna.title}</TableCell>
 							<TableCell key={qna.boardNo + 'created'}>{qna.created}</TableCell>
 							<TableCell key={qna.boardNo + 'answer'}>{qna.views}{/* TODO 여기는 답변 여부 */}</TableCell>
-						</TableRow>))
-					}</> : <div className="flex justifyContentCenter" style={{ height: '100%', alignItems: 'center' }}>Q&A 접수 내역이 없습니다</div>}
+						</TableRow>)) : <div className="flex justifyContentCenter" style={{ height: '100%', alignItems: 'center' }}>Q&A 접수 내역이 없습니다</div>}
 				</TableBody>
 			</Table>
-		</article>
-		<article className="flex flexDirectionColumn justifyContentCenter" style={{ width: '60%', minHeight: '100%', alignItems: 'center', border: '1px solid #e0e0e0' }}>
-			여기는 qna리스트에서 선택한 qna 정보가 보일 곳
-		</article>
-	</section >);
+		</Paper>
+		<Paper variant="outlined" square className="flex flexDirectionColumn" style={{ width: '60%', minHeight: '100%', alignItems: 'center', padding: '10px' }}>
+			{targetQna ? <QnaView QnaNo={targetQna || 0} /> : <div className="flex" style={{ height: '100%', alignItems: 'center' }}>선택된 Q&A가 없습니다.</div>}
+		</Paper>
+	</section>);
 }

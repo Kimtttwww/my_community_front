@@ -4,9 +4,9 @@ import { GuestPath } from "@/entity/guest/model/GuestPath";
 import { GuestValidSchema } from "@/entity/guest/model/GuestValidSchema";
 import css from "@/entity/guest/ui/loginPage.module.css";
 import useFormInputErrorHandler from "@/shared/lib/useFormInputErrorHandler";
-import OurTitle from "@/shared/ui/OurTitle";
+import NaviBar from "@/shared/ui/NaviBar";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, TextField } from "@mui/material";
+import { Button, Paper, TextField } from "@mui/material";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { FieldValues, useForm } from "react-hook-form";
@@ -31,18 +31,15 @@ export default function GuestLoginPage() {
 			.catch(() => alert('로그인 실패'));
 	}
 
-	return (<div className="flex justifyContentCenter" style={{ paddingTop: '75px' }}>
-		<section style={{ width: '400px', minHeight: '300px', border: '1px solid lightgray', borderRadius: '10px', marginTop: '30px', padding: '0 20px' }}>
-			<article className="flex justifyContentCenter">
-				<OurTitle />
-			</article>
-			<form id="form" onSubmit={handleSubmit(handleValid, handleDefaultInvalid)} className="flex flexDirectionColumn" style={{ height: '150px', justifyContent: 'space-around' }}>
-				<TextField label="아이디" {...register('id')} error={Boolean(validState?.id)} helperText={validState.id} autoFocus className={`${css.spacing}`} />
-				<TextField type="password" label="비밀번호" {...register('pwd')} error={Boolean(validState?.pwd)} helperText={validState.pwd} className={`${css.spacing}`} />
-			</form>
-			<article>
-				<Button type="submit" form={'form'} variant="contained" color="primary" size="large" fullWidth style={{ margin: '25px 0' }}>로그인</Button>
-			</article>
-		</section>
-	</div>);
+	return (<>
+		<NaviBar />
+		<div className="flex justifyContentCenter" style={{ paddingTop: '35px' }}>
+			<Paper component={'form'} variant="outlined" onSubmit={handleSubmit(handleValid, handleDefaultInvalid)} style={{ width: '400px', minHeight: '200px', marginTop: '30px', padding: '20px 20px' }}>
+				<h2 className={`${css.spacing}`} style={{ textAlign: 'center' }}>로그인</h2>
+				<TextField label="아이디" {...register('id')} error={Boolean(validState?.id)} helperText={validState.id} autoFocus fullWidth className={`${css.spacing}`} />
+				<TextField type="password" label="비밀번호" {...register('pwd')} error={Boolean(validState?.pwd)} helperText={validState.pwd} fullWidth className={`${css.spacing}`} />
+				<Button type="submit" variant="contained" color="primary" size="large" fullWidth className={`${css.spacing}`}>로그인</Button>
+			</Paper>
+		</div>
+	</>);
 }

@@ -4,6 +4,7 @@ import { Board } from "@/entity/board/model/boardTypes";
 import { getBoardList, getBoardTitle } from "@/feature/board/api/boardGetApi";
 import { combineURLSearchParams } from "@/shared/lib/searchParamsUtils";
 import InteractivePagination from "@/shared/ui/InteractivePagination";
+import NaviBar from "@/shared/ui/NaviBar";
 import BoardList from "@/widget/board/ui/BoardList";
 import { Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
@@ -36,27 +37,30 @@ export default function BoardListPage() {
 		nav.push('?' + url.toString());
 	}
 
-	return (<div className="flex justifyContentCenter" style={{ alignItems: 'center' }}>
-		<div className="flexDirectionColumn" style={{ minWidth: '600px', minHeight: '750px', margin: '50px auto 0' }}>
-			<section className="flex" style={{ justifyContent: 'space-between' }}>
-				<h2 className="flex" style={{ marginBottom: '15px' }}>{title}</h2>
+	return (<>
+		<NaviBar />
+		<div className="flex justifyContentCenter" style={{ alignItems: 'center' }}>
+			<div className="flexDirectionColumn" style={{ minWidth: '600px', minHeight: '750px', margin: '20px auto 0' }}>
+				<section className="flex" style={{ justifyContent: 'space-between' }}>
+					<h2 className="flex" style={{ marginBottom: '15px' }}>{title}</h2>
 
-				{/* TODO 카테고리와 검색어를 받는 검색창 추가 필요 */}
+					{/* TODO 카테고리와 검색어를 받는 검색창 추가 필요 */}
 
-				<article>
-					<Select size="small" value={String(perPage)} onChange={handleChange}>
-						<MenuItem value={5}>5</MenuItem>
-						<MenuItem value={10}>10</MenuItem>
-						<MenuItem value={25}>25</MenuItem>
-						<MenuItem value={50}>50</MenuItem>
-					</Select>
-					{domain !== 'notice' ? <Button onClick={() => nav.push(`/${domain}/write`)}>글 작성</Button> : ''}
-				</article>
-			</section>
+					<article>
+						<Select size="small" value={String(perPage)} onChange={handleChange}>
+							<MenuItem value={5}>5</MenuItem>
+							<MenuItem value={10}>10</MenuItem>
+							<MenuItem value={25}>25</MenuItem>
+							<MenuItem value={50}>50</MenuItem>
+						</Select>
+						{domain !== 'notice' ? <Button onClick={() => nav.push(`/${domain}/write`)}>글 작성</Button> : ''}
+					</article>
+				</section>
 
-			<BoardList boards={boards} domain={domain as string} />
+				<BoardList boards={boards} domain={domain as string} />
 
-			<InteractivePagination allCount={count} />
+				<InteractivePagination allCount={count} />
+			</div>
 		</div>
-	</div>);
+	</>);
 }

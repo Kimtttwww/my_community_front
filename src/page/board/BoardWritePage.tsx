@@ -7,6 +7,7 @@ import css from "@/entity/board/ui/writePage.module.css";
 import { getBoardTitle, getCategoryList } from "@/feature/board/api/boardGetApi";
 import myAxios from "@/shared/lib/myAxios";
 import useFormInputErrorHandler from "@/shared/lib/useFormInputErrorHandler";
+import NaviBar from "@/shared/ui/NaviBar";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
@@ -53,30 +54,34 @@ export default function BoardWritePage({ domain }: OwnProps) {
 			.catch(() => alert('게시글 작성 실패'))
 	}
 
-	return (<div className="flex flexDirectionColumn" style={{ width: '1000px', minHeight: '600px', margin: '0 auto', marginTop: '50px' }}>
-		<h1 className='flex' style={{ textTransform: 'uppercase', marginBottom: '5px' }}>{boardTitle}</h1>
-		<hr style={{ borderColor: 'gray' }} />
+	return (<>
+		<NaviBar />
+		{/* TODO Page로 변환 가능 확인 필요 */}
+		<div className="flex flexDirectionColumn" style={{ width: '1000px', minHeight: '600px', margin: '20px auto 0' }}>
+			<h1 className='flex' style={{ textTransform: 'uppercase', marginBottom: '5px' }}>{boardTitle}</h1>
+			<hr style={{ borderColor: 'gray' }} />
 
-		<form onSubmit={handleSubmit(handleValid, handleDefaultInvalid)} style={{ margin: '30px 50px', padding: '15px 0' }}>
-			<article className={`${css.spacing}`}>
-				<TextField {...register('title')} error={Boolean(validState?.title)} helperText={validState.title} size="small" label='제목' style={{ minWidth: '50%', marginRight: '15px' }} />
-				<FormControl size="small" style={{ minWidth: '25%' }}>
-					<InputLabel>카테고리</InputLabel>
-					<Select {...register('category')} label='카테고리' defaultValue={0}>
-						<MenuItem value={0}>일반</MenuItem>
-						{categoryList.map((category) => (<MenuItem key={category?.categoryName} value={category?.categoryNo}>{category?.categoryName}</MenuItem>))}
-					</Select>
-				</FormControl>
-			</article>
+			<form onSubmit={handleSubmit(handleValid, handleDefaultInvalid)} style={{ margin: '30px 50px', padding: '15px 0' }}>
+				<article className={`${css.spacing}`}>
+					<TextField {...register('title')} error={Boolean(validState?.title)} helperText={validState.title} size="small" label='제목' style={{ minWidth: '50%', marginRight: '15px' }} />
+					<FormControl size="small" style={{ minWidth: '25%' }}>
+						<InputLabel>카테고리</InputLabel>
+						<Select {...register('category')} label='카테고리' defaultValue={0}>
+							<MenuItem value={0}>일반</MenuItem>
+							{categoryList.map((category) => (<MenuItem key={category?.categoryName} value={category?.categoryNo}>{category?.categoryName}</MenuItem>))}
+						</Select>
+					</FormControl>
+				</article>
 
-			<article className={`${css.spacing}`}>
-				<TextField {...register('content')} error={Boolean(validState?.content)} helperText={validState.content} fullWidth multiline minRows={10}></TextField>
-			</article>
+				<article className={`${css.spacing}`}>
+					<TextField {...register('content')} error={Boolean(validState?.content)} helperText={validState.content} fullWidth multiline minRows={10}></TextField>
+				</article>
 
-			<article className="flex" style={{ flexDirection: 'row-reverse' }}>
-				<Button type="submit" variant="contained" color="success">등록</Button>
-				<Button variant="outlined" color="inherit" style={{ marginRight: '10px' }}>취소</Button>
-			</article>
-		</form>
-	</div>);
+				<article className="flex" style={{ flexDirection: 'row-reverse' }}>
+					<Button type="submit" variant="contained" color="success">등록</Button>
+					<Button variant="outlined" color="inherit" style={{ marginRight: '10px' }}>취소</Button>
+				</article>
+			</form>
+		</div>
+	</>);
 }
